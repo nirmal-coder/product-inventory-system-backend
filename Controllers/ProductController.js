@@ -197,11 +197,12 @@ const updateProduct = async (req, res) => {
     const oldStock = existing.stock;
     const newStock = Number(stock);
 
+    const date = new Date().toISOString();
     if (oldStock !== newStock) {
       await DB.runAsync(
         `INSERT INTO inventory_history (product_id, old_quantity, new_quantity, change_date, user_info)
-   VALUES (?, ?, ?, datetime('now', 'localtime'), ?)`,
-        [productId, oldStock, newStock, "admin"]
+   VALUES (?, ?, ?, ?, ?)`,
+        [productId, oldStock, newStock, date, "admin"]
       );
     }
 

@@ -60,13 +60,13 @@ const importProducts = async (req, res) => {
           ]);
 
           const productId = insertResult.lastID;
-
+          const date = new Date().toISOString();
           // 🔥 Insert inventory history (matching schema)
           await DB.runAsync(
             `INSERT INTO inventory_history 
       (product_id, old_quantity, new_quantity, change_date, user_info)
-   VALUES (?, ?, ?, datetime('now'), ?)`,
-            [productId, 0, Number(stock), "CSV Import"]
+   VALUES (?, ?, ?, ?, ?)`,
+            [productId, 0, Number(stock), date, "CSV Import"]
           );
 
           added++;
