@@ -51,8 +51,6 @@ const addProduct = async (req, res) => {
       status,
     ]);
 
-    console.log("addToDb => ", addToDb);
-
     const productId = addToDb.lastID;
 
     // 🔥 Insert inventory log for first creation
