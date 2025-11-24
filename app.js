@@ -6,6 +6,7 @@ const productRouter = require("./Routers/productRouter");
 const importExport = require("./Routers/importExportRouter");
 const connectCloudinary = require("./config/cloudinary");
 const authRouter = require("./Routers/authRouter");
+const formatDate12 = require("./utils/getDate");
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+console.log(formatDate12());
 
 app.use("/api", productRouter);
 app.use("/api", importExport);

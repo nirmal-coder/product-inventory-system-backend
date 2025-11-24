@@ -1,16 +1,21 @@
 function formatDate12(date = new Date()) {
   const pad = (n) => String(n).padStart(2, "0");
 
-  let hours = date.getHours();
-  const minutes = pad(date.getMinutes());
-  const seconds = pad(date.getSeconds());
+  // Convert UTC → IST
+  const istOffset = 5 * 60 + 30; // +5:30 in minutes
+  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+  const istDate = new Date(utc + istOffset * 60000);
+
+  let hours = istDate.getHours();
+  const minutes = pad(istDate.getMinutes());
+  const seconds = pad(istDate.getSeconds());
 
   const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12; // convert 0 → 12
+  hours = hours % 12 || 12;
 
-  const day = pad(date.getDate());
-  const month = pad(date.getMonth() + 1);
-  const year = date.getFullYear();
+  const day = pad(istDate.getDate());
+  const month = pad(istDate.getMonth() + 1);
+  const year = istDate.getFullYear();
 
   return `${day}/${month}/${year} ${pad(hours)}:${minutes}:${seconds} ${ampm}`;
 }
