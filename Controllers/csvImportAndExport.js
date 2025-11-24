@@ -1,6 +1,7 @@
 const fs = require("fs");
 const csv = require("csv-parser");
 const DB = require("../config/connectDb");
+const formatDate12 = require("../utils/getDate");
 
 const importProducts = async (req, res) => {
   try {
@@ -60,7 +61,7 @@ const importProducts = async (req, res) => {
           ]);
 
           const productId = insertResult.lastID;
-          const date = new Date().toISOString();
+          const date = formatDate12();
           // 🔥 Insert inventory history (matching schema)
           await DB.runAsync(
             `INSERT INTO inventory_history 

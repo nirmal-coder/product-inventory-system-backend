@@ -1,4 +1,5 @@
 const DB = require("../config/connectDb");
+const formatDate12 = require("../utils/getDate");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -54,10 +55,11 @@ const addProduct = async (req, res) => {
     const productId = addToDb.lastID;
 
     // 🔥 Insert inventory log for first creation
+    const date = formatDate12();
     await DB.runAsync(
       `INSERT INTO inventory_history (product_id, old_quantity, new_quantity, change_date, user_info)
-   VALUES (?, ?, ?, datetime('now'), ?)`,
-      [productId, 0, Number(stock), "admin"]
+   VALUES (?, ?, ?, ?, ?)`,
+      [productId, 0, Number(stock), date, "admin"]
     );
 
     const newProduct = await DB.getAsync(
@@ -195,7 +197,7 @@ const updateProduct = async (req, res) => {
     const oldStock = existing.stock;
     const newStock = Number(stock);
 
-    const date = new Date().toISOString();
+    const date = formatDate12();
     if (oldStock !== newStock) {
       await DB.runAsync(
         `INSERT INTO inventory_history (product_id, old_quantity, new_quantity, change_date, user_info)
