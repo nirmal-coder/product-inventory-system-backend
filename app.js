@@ -21,6 +21,7 @@ app.use(
 );
 
 console.log(formatDate12());
+const PORT = process.env.PORT || 3000;
 
 app.use("/api", productRouter);
 app.use("/api", importExport);
@@ -33,5 +34,5 @@ app.get("/", (req, res) => {
 
 connectCloudinary().then(() => {
   console.log("cloudinary connected successfully!");
-  app.listen(3000, () => console.log("server running on port 3000"));
+  app.listen(PORT, () => console.log(`server running on port ${PORT}`));
 });
