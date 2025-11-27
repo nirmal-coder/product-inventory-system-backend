@@ -21,7 +21,7 @@ app.use(
 );
 
 console.log(formatDate12());
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.use("/api", productRouter);
 app.use("/api", importExport);
